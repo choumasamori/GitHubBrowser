@@ -9,6 +9,26 @@ function HomeScreen({navigation}){
   const [username, setUsername] = useState("");
   const [token, setToken] = useState("");
   
+  const login = (username, token) => {
+    axios.get('https://api.github.com/user',{
+      headers:{'Authorization':'token '+token}
+    }).then((data)=>{
+      if(data.data.login!=username){
+        alert("Wrong Username")
+      }else{
+        navigation.navigate('Repository',{
+          token: token
+        })
+      }
+      setUsername("");
+      setToken("");
+    }).catch((err)=>{
+      setUsername("");
+      setToken("");
+      alert("Wrong Password");
+      console.log(err);
+    })
+  }
 
   return(
     <Container>
@@ -20,14 +40,22 @@ function HomeScreen({navigation}){
           </Item>
           <Item stackedLabel last>
             <Label>Password</Label>
-            <Input value={token} onChangeText={(text)=>{setToken(text)}}/>
+            <Input secureTextEntry value={token} onChangeText={(text)=>{setToken(text)}}/>
           </Item>
-          <Button style={{alignSelf:'center', marginTop:20}}>
+          <Button style={{alignSelf:'center', marginTop:20}} onPress={()=>{login(username, token)}}>
             <Text>Sign In</Text>
           </Button>
         </Form>
       </Content>
     </Container>
+  );
+}
+
+function Repository({route, navigation}){
+  return(
+    <View>
+
+    </View>
   );
 }
 
@@ -39,6 +67,9 @@ export default class App extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomeScreen}/>
+          <Stack.Screen name="Repository" component={Repository} options={({navigation})=>({
+            headerLeft: () => (null)
+            })} />
         </Stack.Navigator>
       </NavigationContainer>
     );
