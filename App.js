@@ -72,6 +72,7 @@ function Repository({route, navigation}){
         data:data.data
       })
     }).catch((err)=>{
+      alert("Repository not found");
       console.log(err);
     })
   }
