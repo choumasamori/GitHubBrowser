@@ -52,10 +52,22 @@ function HomeScreen({navigation}){
 }
 
 function Repository({route, navigation}){
+  const {token} = route.params;
+  const [repo, setRepo] = useState("facebook/react-native");
   return(
-    <View>
-
-    </View>
+      <Container>
+        <Content>
+          <Form>
+            <Item stackedLabel>
+              <Label>Repositories</Label>
+              <Input value={repo} onChangeText={(text)=>{setRepo(text)}}/>
+            </Item>
+            <Button style={{alignSelf:'center',marginTop:20}}>
+              <Text>Browse</Text>
+            </Button>
+          </Form>
+        </Content>
+      </Container>
   );
 }
 
