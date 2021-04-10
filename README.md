@@ -25,3 +25,17 @@
 
 ![](https://i.imgur.com/tNhmfkI.gif)
 
+
+**Error Test**
+
+1. Wrong Username 
+
+![](https://i.imgur.com/94dhydo.gif)
+
+2. Wrong Password
+
+![](https://i.imgur.com/6XqiFTi.gif)
+
+3. Wrong Repository
+
+![](https://i.imgur.com/WuOezHn.gif)
