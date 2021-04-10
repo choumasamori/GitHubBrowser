@@ -90,6 +90,9 @@ function Repository({route, navigation}){
             </Button>
           </Form>
         </Content>
+        <Button danger onPress={()=>{navigation.dispatch(StackActions.popToTop());}} style={{alignSelf:'center', padding:10}}>
+          <Text>Logout</Text>
+        </Button>
       </Container>
   );
 }
@@ -128,6 +131,9 @@ function Detail({route, navigation}){
         keyExtractor={(item, index)=>index.toString()}
         />
       </SafeAreaView>
+      <Button danger onPress={()=>{navigation.dispatch(StackActions.popToTop());}} style={{alignSelf:'center', padding:10}}>
+          <Text>Logout</Text>
+      </Button>
     </Container>
   );
 }
