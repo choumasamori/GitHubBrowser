@@ -1,9 +1,10 @@
 import React, {Component, useEffect, useState} from 'react';
-import {View, BackHandler} from 'react-native'
+import {View, BackHandler, SafeAreaView, FlatList} from 'react-native'
 import {NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import {Container, Content,Item, Button, Text, Form, Input, Label} from 'native-base'
+import {Container, Content,Item, Button, Text, Form, Input, Label, Card, CardItem, Body, Left, Thumbnail, Right} from 'native-base'
 const axios = require('axios');
+const moment = require('moment');
 
 function HomeScreen({navigation}){
   const [username, setUsername] = useState("");
@@ -92,8 +93,41 @@ function Repository({route, navigation}){
   );
 }
 function Detail({route, navigation}){
+  const {token, data} = route.params;
   return(
-    <View></View>
+    <Container>
+      <SafeAreaView style={{flex: 1}}>
+        <FlatList 
+        data={data}
+        ListEmptyComponent={()=>{return <View><Text>Empty</Text></View>}}
+        renderItem={({item})=>{
+          const time = moment(item.commit.author.date).fromNow();
+          return <Card>
+                    <CardItem>
+                      <Left>
+                        <Thumbnail source={{uri: item.author.avatar_url}}/>
+                        <Body>
+                          <Text>{item.commit.author.name}</Text>
+                          <Text note>{item.commit.author.email}</Text>
+                        </Body>
+                      </Left>
+                      <Right>
+                        <Body>
+                          <Text>{time}</Text>
+                        </Body>
+                      </Right>
+                    </CardItem>
+                    <CardItem cardBody>
+                      <Body style={{padding:10}}>
+                        <Text>{item.commit.message}</Text>
+                      </Body>
+                    </CardItem>
+                 </Card>
+        }}
+        keyExtractor={(item, index)=>index.toString()}
+        />
+      </SafeAreaView>
+    </Container>
   );
 }
 const Stack = createStackNavigator();
