@@ -1,5 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
-import {View} from 'react-native'
+import {View, BackHandler} from 'react-native'
 import {NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {Container, Content,Item, Button, Text, Form, Input, Label} from 'native-base'
@@ -54,6 +54,12 @@ function HomeScreen({navigation}){
 function Repository({route, navigation}){
   const {token} = route.params;
   const [repo, setRepo] = useState("facebook/react-native");
+  useEffect(()=>{
+    BackHandler.addEventListener('hardwareBackPress',()=>true)
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', ()=>true)
+    }
+  },[])
   return(
       <Container>
         <Content>
