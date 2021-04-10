@@ -60,6 +60,21 @@ function Repository({route, navigation}){
       BackHandler.removeEventListener('hardwareBackPress', ()=>true)
     }
   },[])
+
+  const browse = (repo) => {
+    axios.get('https://api.github.com/repos/'+repo+'/commits',{
+      headers:{'Authorization':'token '+token}
+    }).then((data)=>{
+      //console.log(data);
+      navigation.navigate('Detail',{
+        token:token,
+        data:data.data
+      })
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+
   return(
       <Container>
         <Content>
@@ -68,7 +83,7 @@ function Repository({route, navigation}){
               <Label>Repositories</Label>
               <Input value={repo} onChangeText={(text)=>{setRepo(text)}}/>
             </Item>
-            <Button style={{alignSelf:'center',marginTop:20}}>
+            <Button style={{alignSelf:'center',marginTop:20}} onPress={()=>{browse(repo)}}>
               <Text>Browse</Text>
             </Button>
           </Form>
@@ -76,7 +91,11 @@ function Repository({route, navigation}){
       </Container>
   );
 }
-
+function Detail({route, navigation}){
+  return(
+    <View></View>
+  );
+}
 const Stack = createStackNavigator();
 
 export default class App extends Component {
@@ -88,6 +107,7 @@ export default class App extends Component {
           <Stack.Screen name="Repository" component={Repository} options={({navigation})=>({
             headerLeft: () => (null)
             })} />
+          <Stack.Screen name="Detail" component={Detail}/>
         </Stack.Navigator>
       </NavigationContainer>
     );
